@@ -1,13 +1,11 @@
 package org.acme.jwt.service;
 
-
 import org.acme.jwt.utils.TokenUtils;
 import org.eclipse.microprofile.jwt.Claims;
 import org.jose4j.jwt.JwtClaims;
 
 import javax.enterprise.context.RequestScoped;
 import java.util.Arrays;
-
 
 @RequestScoped
 public class TokenService {
@@ -23,7 +21,7 @@ public class TokenService {
 			jwtClaims.setClaim(Claims.upn.name(), email);
 			jwtClaims.setClaim(Claims.preferred_username.name(), username);
 			jwtClaims.setClaim(Claims.birthdate.name(), birthdate);
-			jwtClaims.setClaim(Claims.groups.name(), Arrays.asList("Echoer", "Tester", "Subscriber"));
+			jwtClaims.setClaim(Claims.groups.name(), Arrays.asList(TokenUtils.ROLE_USER));
 			jwtClaims.setAudience("using-jwt");
 			jwtClaims.setExpirationTimeMinutesInTheFuture(1);
 

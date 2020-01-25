@@ -1,11 +1,5 @@
 package org.acme.jwt.utils;
 
-import org.eclipse.microprofile.jwt.Claims;
-import org.jose4j.jws.AlgorithmIdentifiers;
-import org.jose4j.jws.JsonWebSignature;
-import org.jose4j.jwt.JwtClaims;
-import org.jose4j.jwt.NumericDate;
-
 import java.io.InputStream;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
@@ -13,12 +7,22 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
 import java.util.Map;
 
+import org.eclipse.microprofile.jwt.Claims;
+import org.jose4j.jws.AlgorithmIdentifiers;
+import org.jose4j.jws.JsonWebSignature;
+import org.jose4j.jwt.JwtClaims;
+import org.jose4j.jwt.NumericDate;
+
 /**
  * Utilities for generating a JWT for testing
  */
 public class TokenUtils {
 
-	private TokenUtils() { }
+	private TokenUtils() {
+	}
+
+	public static final String ROLE_USER = "User";
+	public static final String ROLE_ADMIN = "Admin";
 
 	public static String generateTokenString(JwtClaims claims) throws Exception {
 		// Use the private key associated with the public key for a valid signature

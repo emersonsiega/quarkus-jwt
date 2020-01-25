@@ -1,8 +1,6 @@
 package org.acme.jwt.resources;
 
-import org.acme.jwt.service.LotteryService;
-import org.eclipse.microprofile.jwt.Claim;
-import org.eclipse.microprofile.jwt.Claims;
+import java.util.Optional;
 
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
@@ -12,7 +10,11 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.Optional;
+
+import org.acme.jwt.service.LotteryService;
+import org.acme.jwt.utils.TokenUtils;
+import org.eclipse.microprofile.jwt.Claim;
+import org.eclipse.microprofile.jwt.Claims;
 
 @Path("/secured")
 @RequestScoped
@@ -27,7 +29,7 @@ public class LotterySecuredResource {
 
 	@GET
 	@Path("winners")
-	@RolesAllowed({"Echoer", "Subscriber"})
+	@RolesAllowed({ TokenUtils.ROLE_USER })
 	@Produces(MediaType.TEXT_PLAIN)
 	public String winners() {
 		if (username.isPresent()) {
@@ -35,5 +37,13 @@ public class LotterySecuredResource {
 		}
 
 		return lotteryService.winners();
+	}
+
+	@GET
+	@Path("verify")
+	@RolesAllowed({ TokenUtils.ROLE_ADMIN })
+	@Produces(MediaType.TEXT_PLAIN)
+	public String verify() {
+		return "Some administration service...";
 	}
 }
